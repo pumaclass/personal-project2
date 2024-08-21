@@ -1,10 +1,14 @@
 package com.sparta.personalproject2.entity;
 
+import com.sparta.personalproject2.dto.CommentRequestDto;
 import com.sparta.personalproject2.dto.ScheduleRequestDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -22,6 +26,10 @@ public class ScheduleEntity extends TimeStamped {
     @Column(name = "schedule", nullable = false)
     private String schedule;
 
+    @OneToMany
+    @JoinColumn(name = "comment_id")
+    private List<CommentEntity> commentEntityList = new ArrayList<>();
+
     public ScheduleEntity(ScheduleRequestDto requestDto){
         this.id = requestDto.getId();
         this.name = requestDto.getName();
@@ -29,10 +37,15 @@ public class ScheduleEntity extends TimeStamped {
         this.schedule = requestDto.getSchedule();
     }
 
+    public void addComment(CommentEntity comment){
+        this.commentEntityList.add(comment);
+    }
+
     public void update(ScheduleRequestDto requestDto){
         this.name = requestDto.getName();
         this.scheduleTitle = requestDto.getScheduleTitle();
         this.schedule = requestDto.getSchedule();
     }
+
 
 }

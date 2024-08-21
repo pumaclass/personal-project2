@@ -1,5 +1,7 @@
 package com.sparta.personalproject2.controller;
 
+import com.sparta.personalproject2.dto.CommentRequestDto;
+import com.sparta.personalproject2.dto.CommentResponseDto;
 import com.sparta.personalproject2.dto.ScheduleRequestDto;
 import com.sparta.personalproject2.dto.SchedulerResponseDto;
 import com.sparta.personalproject2.entity.ScheduleEntity;
