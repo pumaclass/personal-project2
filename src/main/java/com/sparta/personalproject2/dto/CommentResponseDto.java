@@ -13,5 +13,6 @@ public class CommentResponseDto {
         this.id = saveComment.getId();
         this.name = saveComment.getName();
         this.comment = saveComment.getComment();
+
     }
 }

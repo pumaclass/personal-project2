@@ -1,6 +1,6 @@
 package com.sparta.personalproject2.entity;
 
-import com.sparta.personalproject2.dto.CommentRequestDto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sparta.personalproject2.dto.ScheduleRequestDto;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -25,9 +25,12 @@ public class ScheduleEntity extends TimeStamped {
     private String scheduleTitle;
     @Column(name = "schedule", nullable = false)
     private String schedule;
+    @Column(name = "commentCnt")
+    private int commentCnt;
 
-    @OneToMany
-    @JoinColumn(name = "comment_id")
+
+    @OneToMany(mappedBy = "schedule")
+    @JsonIgnore
     private List<CommentEntity> commentEntityList = new ArrayList<>();
 
     public ScheduleEntity(ScheduleRequestDto requestDto){
@@ -39,6 +42,7 @@ public class ScheduleEntity extends TimeStamped {
 
     public void addComment(CommentEntity comment){
         this.commentEntityList.add(comment);
+        comment.setSchedule(this);
     }
 
     public void update(ScheduleRequestDto requestDto){

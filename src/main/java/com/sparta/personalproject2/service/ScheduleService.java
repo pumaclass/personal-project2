@@ -9,9 +9,14 @@ import com.sparta.personalproject2.entity.ScheduleEntity;
 import com.sparta.personalproject2.repository.CommentRepository;
 import com.sparta.personalproject2.repository.ScheduleRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -46,13 +51,13 @@ public class ScheduleService {
         return schedule;
     }
 
-    private ScheduleEntity findId(Long id){
+    private ScheduleEntity findId(Long id) {
         return scheduleRepository.findById(id).orElseThrow(() ->
                 new IllegalArgumentException("해당 ID를 찾을 수 없습니다.")
         );
     }
 
-    private CommentEntity findCommentId(Long id){
+    private CommentEntity findCommentId(Long id) {
         return commentRepository.findById(id).orElseThrow(() ->
                 new IllegalArgumentException("해당 ID를 찾을 수 없습니다.")
         );
@@ -83,4 +88,23 @@ public class ScheduleService {
         commentRepository.delete(comment);
         return comment;
     }
+
+    public Page<SchedulerResponseDto> getAllSchedule(int page, int size, String sortBy, boolean isAsc) {
+        Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
+        Sort sort = Sort.by(direction, sortBy);
+        Pageable pageable = PageRequest.of(page,size,sort);
+
+        Page<ScheduleEntity> scheduleList;
+        scheduleList = scheduleRepository.findAll(pageable);
+        for(ScheduleEntity schedule:scheduleList){
+            schedule.setCommentCnt(schedule.getCommentEntityList().size());
+//        SchedulerResponseDto responseDto = new SchedulerResponseDto(schedule.getId(), schedule.getName(), schedule.getScheduleTitle(), schedule.getSchedule(), commentCount);
+//        responseDtoList.add(responseDto);
+        }
+        return scheduleList.map(SchedulerResponseDto::new);
+//        return scheduleRepository.findAll(pageable)
+//                stream().map(SchedulerResponseDto::new).toList();
+    }
+
+
 }
