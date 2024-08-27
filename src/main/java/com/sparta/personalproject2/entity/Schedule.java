@@ -15,7 +15,7 @@ import java.util.List;
 @Setter
 @Table(name = "schedule")
 @NoArgsConstructor
-public class ScheduleEntity extends TimeStamped {
+public class Schedule extends TimeStamped {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -29,18 +29,18 @@ public class ScheduleEntity extends TimeStamped {
     private int commentCnt;
 
 
-    @OneToMany(mappedBy = "schedule")
+    @OneToMany(mappedBy = "schedule", cascade = CascadeType.REMOVE)
     @JsonIgnore
-    private List<CommentEntity> commentEntityList = new ArrayList<>();
+    private List<Comment> commentEntityList = new ArrayList<>();
 
-    public ScheduleEntity(ScheduleRequestDto requestDto){
+    public Schedule(ScheduleRequestDto requestDto){
         this.id = requestDto.getId();
         this.name = requestDto.getName();
         this.scheduleTitle = requestDto.getScheduleTitle();
         this.schedule = requestDto.getSchedule();
     }
 
-    public void addComment(CommentEntity comment){
+    public void addComment(Comment comment){
         this.commentEntityList.add(comment);
         comment.setSchedule(this);
     }

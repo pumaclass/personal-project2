@@ -2,13 +2,11 @@ package com.sparta.personalproject2.controller;
 
 import com.sparta.personalproject2.dto.ScheduleRequestDto;
 import com.sparta.personalproject2.dto.SchedulerResponseDto;
-import com.sparta.personalproject2.entity.ScheduleEntity;
+import com.sparta.personalproject2.entity.Schedule;
 import com.sparta.personalproject2.service.ScheduleService;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -36,17 +34,17 @@ public class ScheduleController {
     }
 
     @GetMapping("/schedule/{id}")
-    public ResponseEntity<ScheduleEntity> getPersonalSchedule(@PathVariable Long id) {
+    public ResponseEntity<Schedule> getPersonalSchedule(@PathVariable Long id) {
         return ResponseEntity.ok(scheduleService.getPersonalSchedule(id));
     }
 
     @PutMapping("/schedule/{id}")
-    public ResponseEntity<ScheduleEntity> updateSchedule(@PathVariable Long id, @RequestBody ScheduleRequestDto requestDto) {
+    public ResponseEntity<Schedule> updateSchedule(@PathVariable Long id, @RequestBody ScheduleRequestDto requestDto) {
         return ResponseEntity.ok(scheduleService.updateSchedule(id, requestDto));
     }
 
     @DeleteMapping("/schedule/{id}")
-    public ResponseEntity<ScheduleEntity> deleteSchedule(@PathVariable Long id) {
+    public ResponseEntity<Schedule> deleteSchedule(@PathVariable Long id) {
         return ResponseEntity.ok(scheduleService.deleteSchedule(id));
     }
 

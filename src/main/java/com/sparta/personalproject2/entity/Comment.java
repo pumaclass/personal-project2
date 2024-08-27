@@ -12,7 +12,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Table(name = "comment")
-public class CommentEntity extends TimeStamped{
+public class Comment extends TimeStamped{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -24,9 +24,9 @@ public class CommentEntity extends TimeStamped{
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "schedule")
-    private ScheduleEntity schedule;
+    private Schedule schedule;
 
-    public CommentEntity(CommentRequestDto requestDto){
+    public Comment(CommentRequestDto requestDto){
         this.id = requestDto.getId();
         this.name = requestDto.getName();
         this.comment = requestDto.getComment();

@@ -1,10 +1,7 @@
 package com.sparta.personalproject2.dto;
 
-import com.sparta.personalproject2.entity.CommentEntity;
-import com.sparta.personalproject2.entity.ScheduleEntity;
+import com.sparta.personalproject2.entity.Schedule;
 import lombok.Getter;
-
-import java.util.List;
 
 @Getter
 public class SchedulerResponseDto {
@@ -14,7 +11,7 @@ public class SchedulerResponseDto {
     private String schedule;
     private int commentCnt;
 
-    public SchedulerResponseDto(ScheduleEntity Schedule) {
+    public SchedulerResponseDto(Schedule Schedule) {
         this.id = Schedule.getId();
         this.name = Schedule.getName();
         this.scheduleTitle = Schedule.getScheduleTitle();
