@@ -19,8 +19,6 @@ public class Schedule extends TimeStamped {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "name", nullable = false)
-    private String name;
     @Column(name = "schedule_title", nullable = false)
     private String scheduleTitle;
     @Column(name = "schedule", nullable = false)
@@ -33,9 +31,17 @@ public class Schedule extends TimeStamped {
     @JsonIgnore
     private List<Comment> commentEntityList = new ArrayList<>();
 
+    @OneToMany(mappedBy = "schedule", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<UserSchedule> userScheduleList = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    @JsonIgnore
+    private User user;
+
     public Schedule(ScheduleRequestDto requestDto){
         this.id = requestDto.getId();
-        this.name = requestDto.getName();
         this.scheduleTitle = requestDto.getScheduleTitle();
         this.schedule = requestDto.getSchedule();
     }
@@ -46,10 +52,19 @@ public class Schedule extends TimeStamped {
     }
 
     public void update(ScheduleRequestDto requestDto){
-        this.name = requestDto.getName();
         this.scheduleTitle = requestDto.getScheduleTitle();
         this.schedule = requestDto.getSchedule();
     }
 
 
+    public void addUserScheduleList(UserSchedule userSchedule) {
+        this.userScheduleList.add(userSchedule);
+        userSchedule.setSchedule(this);
+    }
+
+    public Schedule(ScheduleRequestDto requestDto, User user) {
+        this.scheduleTitle = requestDto.getScheduleTitle();
+        this.schedule = requestDto.getSchedule();
+        this.user = user;
+    }
 }

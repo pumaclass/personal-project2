@@ -2,24 +2,24 @@ package com.sparta.personalproject2.controller;
 
 import com.sparta.personalproject2.dto.ScheduleRequestDto;
 import com.sparta.personalproject2.dto.SchedulerResponseDto;
+import com.sparta.personalproject2.dto.UserScheduleResponseDto;
 import com.sparta.personalproject2.entity.Schedule;
 import com.sparta.personalproject2.service.ScheduleService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
+@RequiredArgsConstructor
 public class ScheduleController {
     private final ScheduleService scheduleService;
 
-    ScheduleController(ScheduleService schedulerService) {
-        this.scheduleService = schedulerService;
-    }
 
-    @PostMapping("/schedule")
-    public ResponseEntity<SchedulerResponseDto> createSchedule(@RequestBody ScheduleRequestDto requestDto) {
-        return ResponseEntity.ok(scheduleService.createSchedule(requestDto));
+    @PostMapping("/schedule/{id}")
+    public ResponseEntity<SchedulerResponseDto> createSchedule(@PathVariable Long id,@RequestBody ScheduleRequestDto requestDto) {
+        return ResponseEntity.ok(scheduleService.createSchedule(id, requestDto));
     }
 
     @ResponseBody
@@ -37,6 +37,8 @@ public class ScheduleController {
     public ResponseEntity<Schedule> getPersonalSchedule(@PathVariable Long id) {
         return ResponseEntity.ok(scheduleService.getPersonalSchedule(id));
     }
+//    @PutMapping(/"schedule/{scheduleid}/{userid}/{adduserid}")
+
 
     @PutMapping("/schedule/{id}")
     public ResponseEntity<Schedule> updateSchedule(@PathVariable Long id, @RequestBody ScheduleRequestDto requestDto) {
@@ -46,6 +48,11 @@ public class ScheduleController {
     @DeleteMapping("/schedule/{id}")
     public ResponseEntity<Schedule> deleteSchedule(@PathVariable Long id) {
         return ResponseEntity.ok(scheduleService.deleteSchedule(id));
+    }
+
+    @PutMapping("/schedule/{scheduleId}/{userId}/{addUserId}")
+    public ResponseEntity<UserScheduleResponseDto> addUserInSchedule(@PathVariable Long scheduleId,@PathVariable Long userId,@PathVariable Long addUserId){
+        return ResponseEntity.ok(scheduleService.addUserInSchedule(scheduleId, userId, addUserId));
     }
 
 }

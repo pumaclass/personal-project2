@@ -1,29 +1,32 @@
 package com.sparta.personalproject2.dto;
 
 import com.sparta.personalproject2.entity.Schedule;
+import com.sparta.personalproject2.entity.User;
+import com.sparta.personalproject2.entity.UserSchedule;
 import lombok.Getter;
 
 @Getter
 public class SchedulerResponseDto {
     private Long id;
-    private String name;
+    private Long userId;
     private String scheduleTitle;
     private String schedule;
     private int commentCnt;
 
-    public SchedulerResponseDto(Schedule Schedule) {
-        this.id = Schedule.getId();
-        this.name = Schedule.getName();
-        this.scheduleTitle = Schedule.getScheduleTitle();
-        this.schedule = Schedule.getSchedule();
-//        this.commentList = Schedule.getCommentEntityList();
-        this.commentCnt = Schedule.getCommentCnt();
+    public SchedulerResponseDto(Schedule schedule) {
+        this.id = schedule.getId();
+        this.userId = schedule.getUser() != null ? schedule.getUser().getId() : null;
+        this.scheduleTitle = schedule.getScheduleTitle();
+        this.schedule = schedule.getSchedule();
+        this.commentCnt = schedule.getCommentCnt();
+
     }
 
-    public SchedulerResponseDto(Long id, String name, String scheduleTitle, String schedule) {
-        this.id = id;
-        this.name = name;
-        this.scheduleTitle = scheduleTitle;
-        this.schedule = schedule;
+    public SchedulerResponseDto(Schedule saveSchedule, User user) {
+        this.id = saveSchedule.getId();
+        this.scheduleTitle = saveSchedule.getScheduleTitle();
+        this.schedule = saveSchedule.getSchedule();
+        this.userId = user.getId();
+        this.commentCnt = this.getCommentCnt();
     }
 }

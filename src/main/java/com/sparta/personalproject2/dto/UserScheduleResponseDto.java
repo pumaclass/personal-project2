@@ -18,13 +18,17 @@ public class UserScheduleResponseDto {
     private List<Long> user;
     private List<UserResponseDto> users = new ArrayList<>();
 
-    public UserScheduleResponseDto(Schedule schedule, List<Long> userList) {
-        this.scheduleId = schedule.getScheduleId();
+    public UserScheduleResponseDto(Schedule schedule, List<User> userList) {
+        this.scheduleId = schedule.getId();
         this.todoTitle = schedule.getScheduleTitle();
         this.todoSchedule = schedule.getSchedule();
         this.commentCnt = schedule.getCommentCnt();
-        this.user = schedule.getUserScheduleList().stream()
-                .map(userSchedule -> userSchedule)
+//        this.user = schedule.getUserScheduleList().stream()
+//                .map(userSchedule -> userSchedule)
+        for(User userschedule: userList){
+            UserResponseDto userResponseDto = new UserResponseDto(userschedule);
+            users.add(userResponseDto);
+        }
 
 
 
