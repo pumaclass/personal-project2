@@ -10,17 +10,19 @@ request : scheduletTtle, schedule
 
 ### Get /api/schedule 
 ### 전체 조회
-request : null;
+request : null
 
 ### Get /api/schedule/{id}
 ### 단건 조회
-request : id;
+request : id
 
 ### Put /api/schedule/{id}
 ### 할일 수정
+request : id
 
 ### Delete /api/schedule/{id}
 ### 스케줄 삭제
+request : id
 
 ### Post /api/user
 ### 유저 저장
