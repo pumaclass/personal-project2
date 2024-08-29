@@ -26,6 +26,9 @@ public class User extends TimeStamped {
     @Column(name = "email")
     private String email;
 
+    @Column(name = "password")
+    private int password;
+
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     @JsonIgnore
     private List<UserSchedule> userScheduleList = new ArrayList<>();
